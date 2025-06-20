@@ -1,6 +1,6 @@
 {
   "name": "onetouch2csv",
-  "version": "0.0.0",
+  "version": "1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,6 +12,8 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "tailwindcss": "^4.1.10",
     "vue": "^3.5.13"
   },
   "devDependencies": {
