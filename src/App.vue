@@ -1,47 +1,73 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, reactive, watch, watchEffect } from 'vue'
+const idioma = ref<string | undefined>(undefined)
+let formateador = undefined
+const ajustarFormateador = () => {
+	formateador = new Intl.DateTimeFormat(idioma.value ? [idioma.value] : idioma.value, { month: 'long' })
+	const fecha = new Date('2000-01-01T00:00:00.000')
+	
+	let meses = Array(12)
+		.map((i, n) => {
+			fecha.setMonth(i + 1)
+
+		})
+}
+watch(
+	idioma,
+	() => {
+		if (idioma.value && idioma.value.length === 2) {
+			ajustarFormateador()
+		}
+	}
+)
+ajustarFormateador()
+
+
+import { parse, type Options } from 'csv-parse/browser/esm/sync'
+const csvinput = ref<HTMLInputElement>()
+const contenido = ref()
+const leerArchivo = () => {
+	if (!csvinput.value?.files || !csvinput.value.files.length) {
+		return
+	}
+	//contenido.value = ''
+	csvinput.value.files[0].text()
+		.then(texto => {
+			// Interpreto el CSV
+			const opciones: Options = {
+				skip_empty_lines: true,
+				fromLine: 2,
+			}
+			contenido.value = parse(texto, opciones)
+
+			// Transformo valores de fecha (columna 2) a valores más manejables
+
+		})
+}
+
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+	<div class="gap-2">
+		<ol>
+			<li>What language is the data CSV in? (Defaults to current locale)
+				<input type="text"
+					   v-model="idioma"
+					   class="w-8 border-b-gray-300 border-2 rounded-2"
+				/>
+			</li>
+			<li>Load the CSV data file:
+				<input type="file" accept="text/csv" ref="csvinput" @change="leerArchivo" /></li>
+		</ol>
+		<div class="gap-2">
+		</div>
+		<div class="w-full m-2">
+			<pre>{{ contenido }}</pre>
+		</div>
+	</div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
