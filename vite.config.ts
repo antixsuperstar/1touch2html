@@ -19,5 +19,8 @@ export default defineConfig({
 	},
 	server: {
 		allowedHosts: ['.lhr.life'],
-	}
+	},
+	build: {
+		sourcemap: true,
+	},
 })
