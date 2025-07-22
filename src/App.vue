@@ -24,7 +24,7 @@ const langpresets: LangPresets = {
 		display: 'es - Español',
 		transform: (datestr) => {
 			const busqueda = datestr.match(/(?<day>\d+) de (?<month>[^ ]+) de (?<year>\d+), (?<hour>\d+):(?<minute>\d+)/)
-			if (!busqueda) return datestr
+			if (!busqueda || !busqueda.groups) return datestr
 
 			console.dir({ busqueda, datestr })
 			return `${busqueda.groups.year}-${mesANumero(busqueda.groups.month)+1}-${busqueda.groups.day} ` +
