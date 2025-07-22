@@ -79,7 +79,7 @@ const leerArchivo = () => {
 </script>
 
 <template>
-	<div class="p-2">
+	<div class="p-2 bg-white dark:bg-gray-800 dark:text-gray-500">
 		<ol class="mb-2">
 			<li>What <a class="font-bold underline" target="_blank" href="https://en.wikipedia.org/wiki/IETF_language_tag">language</a> is the data CSV in?
 				<input type="text"
@@ -99,7 +99,7 @@ const leerArchivo = () => {
 				</label>
 			</li>
 		</ol>
-		<div>
+		<div class="sticky top-0 z-50 bg-white dark:bg-gray-800">
 			<input type="checkbox"
 				   class="mr-2"
 				   id="mostrarContenido"
